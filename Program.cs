@@ -87,6 +87,18 @@ public class Program
         //Chapter 6
         const string CurrentSpell = "You can get the next abilities on";
 
+        //Chapter 7
+        const string ScrollDecoding = "You have the following scrolls, decode them";
+        const string AskScroll = "Which scroll would you like to decode? (0-2)";
+        const string WhatDecode = "What would you like to do with the scroll? (0-2)";
+        const string SecretCode = "The secret code is: ";
+        const string ScrollOneDecoded = "You completely decoded the first scroll";
+        const string ScrollTwoDecoded = "You completely decoded the second scroll";
+        const string ScrollThreeDecoded = "You completely decoded the third scroll";
+        const string ErrorScroll = "You need to choose an existing scroll (0-2)";
+        const string ErrorDecode = "You need to decode in a correct way (0-2)";
+        const string TotalVowel = "There's {0} vowels in the scroll";
+
         string magename = "????";
         int lvlNow = 1, op = 0, xp, xpNow = 0, day, hours, selectMonster, dice, hp, i, j, column, row, digs, treasure, bits, bitsNow, totalBits = 0, rank = 0, item, shopping, answerShop, numScroll, numDecode, vowels, inv = 0;
         int minVal = 1, hourMax = 25, xpMax = 11, monsterMax = 8, monsterMin = 0, diceMax = 7, goldVal = 26, bitMin = 5, bitMax = 51;
@@ -564,6 +576,134 @@ public class Program
                     Console.WriteLine(PressToContinue);
                     Console.ReadKey();
                     lvlNow++;
+                    break;
+                case 7:
+                    vowels = 0;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(ScrollDecoding);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    for (i = 0; i < scroll.Length; i++)
+                    {
+                        Console.WriteLine($"\t{i}. {scroll[i]}");
+                    }
+                    do
+                    {
+                        Console.WriteLine(AskScroll);
+                        try
+                        {
+                            numScroll = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine(ErrorScroll);
+                            numScroll = 3;
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine(ErrorScroll);
+                            numScroll = 3;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine(ErrorScroll);
+                            numScroll = 3;
+                        }
+                    } while (numScroll.Equals(3));
+                    if (numScroll < 3 && numScroll > -1)
+                    {
+                        for (i = 0; i < decode.Length; i++)
+                        {
+                            Console.WriteLine($"\t{i}. {decode[i]}");
+                        }
+                        Console.WriteLine(WhatDecode);
+                        do
+                        {
+                            try
+                            {
+                                numDecode = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine(ErrorDecode);
+                                numDecode = 3;
+                            }
+                            catch (OverflowException)
+                            {
+                                Console.WriteLine(ErrorDecode);
+                                numDecode = 3;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine(ErrorDecode);
+                                numDecode = 3;
+                            }
+                        } while (numDecode.Equals(3));
+                        if (numDecode < 3 && numDecode > -1)
+                        {
+                            switch (numDecode)
+                            {
+                                case 0:
+                                    Console.WriteLine($"{scroll[numScroll].Replace(" ", "")}");
+                                    decodeTypeOne[numScroll] = true;
+                                    break;
+                                case 1:
+                                    foreach (char Vow in vowelsAll)
+                                    {
+                                        for (i = 0; i < scroll[numScroll].Length; i++)
+                                        {
+                                            if (Vow.Equals(scroll[numScroll][i]))
+                                            {
+                                                vowels++;
+                                            }
+                                        }
+                                    }
+                                    decodeTypeTwo[numScroll] = true;
+                                    Console.WriteLine(TotalVowel, vowels);
+                                    break;
+                                case 2:
+
+                                    Console.Write(SecretCode);
+
+                                    for (i = 0; i < scroll[numScroll].Length; i++)
+                                    {
+                                        foreach (char Numb in numbers)
+                                        {
+                                            if (Numb.Equals(scroll[numScroll][i]))
+                                            {
+                                                Console.Write(Numb);
+                                            }
+                                        }
+                                    }
+                                    Console.WriteLine();
+                                    decodeTypeThree[numScroll] = true;
+                                    break;
+                            }
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            if ((decodeTypeOne[0].Equals(true)) && (decodeTypeTwo[0].Equals(true)) && (decodeTypeThree[0].Equals(true)))
+                            {
+                                Console.WriteLine(ScrollOneDecoded);
+                            }
+                            if ((decodeTypeOne[1].Equals(true)) && (decodeTypeTwo[1].Equals(true)) && (decodeTypeThree[1].Equals(true)))
+                            {
+                                Console.WriteLine(ScrollTwoDecoded);
+                            }
+                            if ((decodeTypeOne[2].Equals(true)) && (decodeTypeTwo[2].Equals(true)) && (decodeTypeThree[2].Equals(true)))
+                            {
+                                Console.WriteLine(ScrollThreeDecoded);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine(ErrorDecode);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(ErrorScroll);
+                    }
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(PressToContinue);
+                    Console.ReadKey();
                     break;
             }
         } while (op != 0);
