@@ -74,6 +74,16 @@ public class Program
         const string OwnItems = "Owned items:";
         const string EmptyInv = "You have nothing in your inventory";
 
+        //Chapter 5
+        const string WelcomeShop = "Welcome to my shop";
+        const string InfoShop = "Items \t\t\tPrice";
+        const string AskBuy = "What would you like to buy";
+        const string MoreMoney = "You need more bits to buy that";
+        const string EnoughMoney = "You bought the item";
+        const string ExitShop = "5. Exit shop";
+        const string ErrorShop = "Don't make me lose my time, get out";
+        const string WrongItem = "We don't have that item";
+
         string magename = "????";
         int lvlNow = 1, op = 0, xp, xpNow = 0, day, hours, selectMonster, dice, hp, i, j, column, row, digs, treasure, bits, bitsNow, totalBits = 0, rank = 0, item, shopping, answerShop, numScroll, numDecode, vowels, inv = 0;
         int minVal = 1, hourMax = 25, xpMax = 11, monsterMax = 8, monsterMin = 0, diceMax = 7, goldVal = 26, bitMin = 5, bitMax = 51;
@@ -461,6 +471,77 @@ public class Program
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(PressToContinue);
                     Console.ReadKey();
+                    break;
+                case 5:
+                    shopping = 0;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(WelcomeShop);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    do
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(InfoShop);
+                        for (i = 0; i < shop.Length; i++)
+                        {
+                            Console.WriteLine($"{i}. {shop[i]} \t{priceTwo[i]}");
+                        }
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(ExitShop);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(CurrentBit, totalBits);
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(AskBuy);
+                        try
+                        {
+                            answerShop = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine(ErrorShop);
+                            answerShop = 5;
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine(ErrorShop);
+                            answerShop = 5;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine(ErrorShop);
+                            answerShop = 5;
+                        }
+                        if (answerShop < 0 || answerShop > 5)
+                        {
+                            Console.WriteLine(WrongItem);
+                        }
+                        else if (answerShop < 5)
+                        {
+                            item = answerShop;
+
+                            if (totalBits < price[item])
+                            {
+                                Console.WriteLine(MoreMoney);
+                            }
+                            else
+                            {
+                                Console.WriteLine(EnoughMoney);
+                                string tempItem = shop[item];
+                                string[] tempInv = new string[inventory.Length + 1];
+                                for (i = 0; i < inventory.Length; i++)
+                                {
+                                    tempInv[i] = inventory[i];
+                                }
+                                tempInv[tempInv.Length - 1] = tempItem;
+                                inventory = tempInv;
+                                totalBits = totalBits - price[item];
+                            }
+                        }
+                        else
+                        {
+                            shopping = 5;
+                        }
+                    } while (shopping != 5);
                     break;
             }
         } while (op != 0);
