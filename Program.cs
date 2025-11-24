@@ -417,21 +417,24 @@ public class Program
                         {
                             if (mine[row, column].Equals(Money) || mine[row, column].Equals(Empty))
                             {
-
-                            }
-                            if (goldMine[row, column].Equals(Money))
-                            {
-                                Console.WriteLine(FoundGold);
-                                goldMine[row, column] = Empty;
-                                mine[row, column] = Money;
-                                digs--;
-                                treasure++;
+                                Console.WriteLine(AlreadyDig);
                             }
                             else
                             {
-                                Console.WriteLine(NotFoundGold);
-                                mine[row, column] = Empty;
-                                digs--;
+                                if (goldMine[row, column].Equals(Money))
+                                {
+                                    Console.WriteLine(FoundGold);
+                                    goldMine[row, column] = Empty;
+                                    mine[row, column] = Money;
+                                    digs--;
+                                    treasure++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine(NotFoundGold);
+                                    mine[row, column] = Empty;
+                                    digs--;
+                                }
                             }
                         }
                         for (i = 0; i < coordenates.Length; i++)
