@@ -69,6 +69,7 @@ public class Program
         const string Empty = "❌";
         const string TotalBit = "You got a total of {0} bits";
         const string CurrentBit = "Current bits: {0}";
+        const string AlreadyDig = "You already tried to dig there";
 
         //Chapter 4
         const string OwnItems = "Owned items:";
@@ -414,6 +415,10 @@ public class Program
                         }
                         else
                         {
+                            if (mine[row, column].Equals(Money) || mine[row, column].Equals(Empty))
+                            {
+
+                            }
                             if (goldMine[row, column].Equals(Money))
                             {
                                 Console.WriteLine(FoundGold);
@@ -696,7 +701,7 @@ public class Program
                         {
                             Console.WriteLine(ErrorDecode);
                         }
-                    }
+                    } 
                     else
                     {
                         Console.WriteLine(ErrorScroll);
