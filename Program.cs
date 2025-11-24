@@ -84,6 +84,9 @@ public class Program
         const string ErrorShop = "Don't make me lose my time, get out";
         const string WrongItem = "We don't have that item";
 
+        //Chapter 6
+        const string CurrentSpell = "You can get the next abilities on";
+
         string magename = "????";
         int lvlNow = 1, op = 0, xp, xpNow = 0, day, hours, selectMonster, dice, hp, i, j, column, row, digs, treasure, bits, bitsNow, totalBits = 0, rank = 0, item, shopping, answerShop, numScroll, numDecode, vowels, inv = 0;
         int minVal = 1, hourMax = 25, xpMax = 11, monsterMax = 8, monsterMin = 0, diceMax = 7, goldVal = 26, bitMin = 5, bitMax = 51;
@@ -542,6 +545,25 @@ public class Program
                             shopping = 5;
                         }
                     } while (shopping != 5);
+                    break;
+                case 6:
+                    lvlNow--;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{CurrentSpell} {level[lvlNow]}");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    for (i = lvlNow; i.Equals(lvlNow); i++)
+                    {
+                        Console.Write($"{level[i]} - ");
+                        for (j = 0; j < spells[i].Length; j++)
+                        {
+                            Console.Write($"{spells[i][j]}, ");
+                        }
+                        Console.WriteLine(" ");
+                    }
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(PressToContinue);
+                    Console.ReadKey();
+                    lvlNow++;
                     break;
             }
         } while (op != 0);
