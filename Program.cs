@@ -536,7 +536,7 @@ public class Program
                                 inventory = tempInv;
                                 totalBits = totalBits - price[item];
                             }
-                        }
+                        } 
                         else
                         {
                             shopping = 5;
