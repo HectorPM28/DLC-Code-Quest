@@ -70,6 +70,10 @@ public class Program
         const string TotalBit = "You got a total of {0} bits";
         const string CurrentBit = "Current bits: {0}";
 
+        //Chapter 4
+        const string OwnItems = "Owned items:";
+        const string EmptyInv = "You have nothing in your inventory";
+
         string magename = "????";
         int lvlNow = 1, op = 0, xp, xpNow = 0, day, hours, selectMonster, dice, hp, i, j, column, row, digs, treasure, bits, bitsNow, totalBits = 0, rank = 0, item, shopping, answerShop, numScroll, numDecode, vowels, inv = 0;
         int minVal = 1, hourMax = 25, xpMax = 11, monsterMax = 8, monsterMin = 0, diceMax = 7, goldVal = 26, bitMin = 5, bitMax = 51;
@@ -436,6 +440,24 @@ public class Program
                     totalBits += bitsNow;
                     Console.WriteLine(TotalBit, bitsNow);
                     Console.WriteLine(CurrentBit, totalBits);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(PressToContinue);
+                    Console.ReadKey();
+                    break;
+                case 4:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(OwnItems);
+                    if (inventory.Length < 1)
+                    {
+                        Console.WriteLine(EmptyInv);
+                    }
+                    else
+                    {
+                        for (i = 0; i < inventory.Length; i++)
+                        {
+                            Console.WriteLine(inventory[i]);
+                        }
+                    }
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(PressToContinue);
                     Console.ReadKey();
