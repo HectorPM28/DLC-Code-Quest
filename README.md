@@ -1,6 +1,6 @@
 Repository with all the issues: https://github.com/HectorPM28/Issue-For-Codequest.git
 
-How to use the program?
+# How to use the program?
 Download the main branch in a zip. Open the zip and extract all the files on your selected folder. Open the file "Program.cs" with double-click or, while using a program like Visual Code 2022, open the file from the app.
 
 # Chapter 0
