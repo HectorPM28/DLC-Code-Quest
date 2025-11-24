@@ -55,6 +55,21 @@ public class Program
         const string LevelUp = "Hurray! You leveled up!";
         const string ActualLevel = "Now you're level {0}";
 
+        //Chapter 3
+        const string DigColumn = "On what column do you wanna dig?";
+        const string DigRow = "On what row do you wanna dig?";
+        const string FoundGold = "You found a treasure!";
+        const string NotFoundGold = "You found nothing..";
+        const string OutOfBounds = "You can't dig outside the mine";
+        const string Opentreasure = "You open all of your collected treasures and: ";
+        const string NoTreasure = "You didn't find a single treasure..";
+        const string ErrorDig = "Where are you even digging?";
+        const string Money = "🪙";
+        const string Dirt = "➖";
+        const string Empty = "❌";
+        const string TotalBit = "You got a total of {0} bits";
+        const string CurrentBit = "Current bits: {0}";
+
         string magename = "????";
         int lvlNow = 1, op = 0, xp, xpNow = 0, day, hours, selectMonster, dice, hp, i, j, column, row, digs, treasure, bits, bitsNow, totalBits = 0, rank = 0, item, shopping, answerShop, numScroll, numDecode, vowels, inv = 0;
         int minVal = 1, hourMax = 25, xpMax = 11, monsterMax = 8, monsterMin = 0, diceMax = 7, goldVal = 26, bitMin = 5, bitMax = 51;
@@ -282,6 +297,145 @@ public class Program
                     {
                         Console.WriteLine(TopLvl);
                     }
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(PressToContinue);
+                    Console.ReadKey();
+                    break;
+                case 3:
+
+                    digs = 5;
+                    treasure = 0;
+                    bitsNow = 0;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    for (i = 0; i < coordenates.Length; i++)
+                    {
+                        Console.Write(coordenates[i]);
+                    }
+                    Console.WriteLine();
+                    for (i = 0; i < mine.GetLength(0); i++)
+                    {
+                        Console.Write($"{i + 1}.");
+                        for (j = 0; j < mine.GetLength(1); j++)
+                        {
+                            mine[i, j] = Dirt;
+                            Console.Write($"{mine[i, j]}");
+                        }
+                        Console.WriteLine();
+                    }
+
+                    for (i = 0; i < goldMine.GetLength(0); i++)
+                    {
+                        for (j = 0; j < goldMine.GetLength(1); j++)
+                        {
+                            goldMine[i, j] = rnd.Next(minVal, goldVal) > 9 ? Empty : Money;
+                        }
+                    }
+
+                    while (digs > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(DigColumn);
+                        try
+                        {
+                            column = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine(ErrorDig);
+                            column = -1;
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine(OutOfBounds);
+                            column = -1;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine(ErrorDig);
+                            column = -1;
+                        }
+                        column--;
+
+                        Console.WriteLine(DigRow);
+                        try
+                        {
+                            row = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine(ErrorDig);
+                            row = -1;
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine(OutOfBounds);
+                            row = -1;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine(ErrorDig);
+                            row = -1;
+                        }
+                        row--;
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        if (row < 0 || row > 4 || column < 0 || column > 4)
+                        {
+                            Console.WriteLine(OutOfBounds);
+                        }
+                        else
+                        {
+                            if (goldMine[row, column].Equals(Money))
+                            {
+                                Console.WriteLine(FoundGold);
+                                goldMine[row, column] = Empty;
+                                mine[row, column] = Money;
+                                digs--;
+                                treasure++;
+                            }
+                            else
+                            {
+                                Console.WriteLine(NotFoundGold);
+                                mine[row, column] = Empty;
+                                digs--;
+                            }
+                        }
+                        for (i = 0; i < coordenates.Length; i++)
+                        {
+                            Console.Write($" {coordenates[i]}");
+                        }
+                        Console.WriteLine();
+                        for (i = 0; i < mine.GetLength(0); i++)
+                        {
+                            Console.Write($"{i + 1}.");
+                            for (j = 0; j < mine.GetLength(1); j++)
+                            {
+                                Console.Write($" {mine[i, j]}");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
+
+                    if (treasure.Equals(0))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(NoTreasure);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(Opentreasure);
+                        while (treasure != 0)
+                        {
+                            bits = rnd.Next(bitMin, bitMax);
+                            Console.WriteLine($" You got {bits} bits");
+                            bitsNow += bits;
+                            treasure--;
+                        }
+                    }
+                    totalBits += bitsNow;
+                    Console.WriteLine(TotalBit, bitsNow);
+                    Console.WriteLine(CurrentBit, totalBits);
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(PressToContinue);
                     Console.ReadKey();
